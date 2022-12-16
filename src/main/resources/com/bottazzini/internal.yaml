@@ -1,0 +1,74 @@
+openapi: 3.0.0
+info:
+  version: "3.25.0-SNAPSHOT"
+  title: E4T-USER-IDP
+  description: e4t idp user api
+
+paths:
+  /users:
+    post:
+      summary: create new user
+      requestBody:
+        description: new user
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      operationId: createUser
+      tags:
+        - "users"
+      responses:
+        "200":
+          description: user created
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/User'
+    put:
+      summary: update user
+      requestBody:
+        description: update user
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      operationId: updateUser
+      tags:
+        - "users"
+      responses:
+        "200":
+          description: user updated
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/User'
+components:
+  schemas:
+    User:
+      type: object
+      additionalProperties: false
+      properties:
+        isEnabled:
+          type: boolean
+          description: is user enabled
+        name:
+          type: string
+          description: Name of the user.
+        surname:
+          type: string
+          description: Surname of the user.
+        email:
+          type: string
+          description: The user principal name (someuser@contoso.com). It's an Internet-style login name for the user based on the Internet standard RFC 822. By convention, this should map to the user's email name. The general format is alias@domain, where domain must be present in the tenant's collection of verified domains.
+          pattern: '^/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);$'
+      required:
+        - isEnabled
+        - name
+        - surname
+        - email
